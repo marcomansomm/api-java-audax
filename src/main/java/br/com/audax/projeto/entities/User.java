@@ -1,6 +1,7 @@
 package br.com.audax.projeto.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.CollectionTable;
@@ -29,9 +30,9 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-    private LocalDate registeredAt;
+    private LocalDateTime registeredAt;
 
-    public User(UUID uuid, String username, String password, LocalDate registeredAt){
+    public User(UUID uuid, String username, String password, LocalDateTime registeredAt){
         this.uuid = uuid;
         this.username = username;
         this.password = password;

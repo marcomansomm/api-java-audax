@@ -1,6 +1,6 @@
 package br.com.audax.projeto.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,8 +20,8 @@ public class UserService {
 
     public User cadastrarUser(User novoUser){
         if(novoUser.getUsername().length() < 3 && novoUser.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
-        if(novoUser.getPassword().length() >= 8) throw new RuntimeException("A senha deve conter mais que 8 caracteres");
-        novoUser.setRegisteredAt(LocalDate.now());
+        if(novoUser.getPassword().length() < 8) throw new RuntimeException("A senha deve conter mais que 8 caracteres");
+        novoUser.setRegisteredAt(LocalDateTime.now());
         return this.userRepository.save(novoUser);
     }
 
@@ -30,11 +30,11 @@ public class UserService {
     }
 
     public User buscarUserPorId(UUID id){
-        Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new NotFoundException("Produto de id: " + id + " não foi encontrado!"));
+        User user = this.userRepository.findByUuid(id);
+        return user;
     }
 
-    public User atualizarProduto(UUID id, User userAtualizado) {
+    public User atualizarUser(UUID id, User userAtualizado) {
         User user = this.buscarUserPorId(id);
 
         if(userAtualizado.getUsername().length() < 3 && userAtualizado.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
@@ -42,7 +42,7 @@ public class UserService {
 
         user.setUsername(userAtualizado.getUsername());
         user.setPassword(userAtualizado.getPassword());
-        user.setRegisteredAt(LocalDate.now());
+        user.setRegisteredAt(LocalDateTime.now());
 
         return this.userRepository.save(user);
     }

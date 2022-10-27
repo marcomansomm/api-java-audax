@@ -1,5 +1,6 @@
 package br.com.audax.projeto.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import br.com.audax.projeto.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>{
     
+    User findByUuid(UUID uuid);
 }
