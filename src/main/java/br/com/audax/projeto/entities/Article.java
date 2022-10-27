@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,10 +25,11 @@ import lombok.Setter;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @Column(name = "uuid", updatable = false, unique = true, nullable = false)
     private UUID uuid;
-    @Column(nullable = false)
-    private String user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column(nullable = false)
     private String title;
     private String resume;
@@ -34,8 +37,8 @@ public class Article {
     private String slug;
     private LocalDate registeredAt;
 
-    public Article(String user_id, UUID uuid, String title, String resume, String text, String slug, LocalDate registeredAt){
-        this.user_id = user_id;
+    public Article(User user, UUID uuid, String title, String resume, String text, String slug, LocalDate registeredAt){
+        this.user = user;
         this.uuid = uuid;
         this.title = title;
         this.resume = resume;
