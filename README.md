@@ -37,7 +37,7 @@ Antes de começar, você precisará ter as seguintes ferramentas instaladas em s
 
 ### 💻 setup
 
-php
+```php
 # clonar este repositório
 $ git clone https://github.com/marcomansomm/api-java-audax.git
 
@@ -46,16 +46,16 @@ $ cd api-java-audax
 
 # instale as dependências
 $ ./mvnw install
-
+```
 
 ## ▶ starting
 
-php
+```php
 # executando o comando
 $ ./mvnw spring-boot:run
 
 # aplicação iniciará em <http://localhost:8080/>
-
+```
 
 <br>
 
