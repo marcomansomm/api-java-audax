@@ -1,21 +1,13 @@
 package br.com.audax.projeto.entities;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
@@ -23,19 +15,14 @@ import lombok.Setter;
 public class User {
 
     @Id
+    @Type(type = "uuid-char")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "uuid", updatable = false, unique = true, nullable = false)
+    @Column(name = "uuid")
     private UUID uuid;
+
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
     private LocalDateTime registeredAt;
-
-    public User(UUID uuid, String username, String password, LocalDateTime registeredAt){
-        this.uuid = uuid;
-        this.username = username;
-        this.password = password;
-        this.registeredAt = registeredAt;
-    }
 }

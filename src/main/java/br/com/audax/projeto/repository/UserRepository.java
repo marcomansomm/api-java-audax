@@ -10,6 +10,7 @@ import br.com.audax.projeto.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>{
-    
-    User findByUuid(UUID uuid);
+
+
+    Optional<User> findById(UUID id);
 }

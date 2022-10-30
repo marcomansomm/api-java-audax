@@ -1,31 +1,22 @@
 package br.com.audax.projeto.controller;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import br.com.audax.projeto.DTO.UserResponseDTO;
+import br.com.audax.projeto.entities.User;
+import br.com.audax.projeto.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.audax.projeto.DTO.UserResponseDTO;
-import br.com.audax.projeto.entities.User;
-import br.com.audax.projeto.repository.UserRepository;
-import br.com.audax.projeto.service.UserService;
-import lombok.NoArgsConstructor;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -56,8 +47,8 @@ public class UserController {
         return new ResponseEntity<>(toUserResponseDTO(user), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> atualizarProduto(@PathVariable UUID uuid, @RequestBody UserResponseDTO user) {
+    @PutMapping("/{uuid}")
+    public ResponseEntity<UserResponseDTO> atualizarProduto(@PathVariable  UUID uuid, @RequestBody UserResponseDTO user) {
         User userAtualizado = this.modelMapper.map(user, User.class);
         userAtualizado = this.userService.atualizarUser(uuid, userAtualizado);
 
