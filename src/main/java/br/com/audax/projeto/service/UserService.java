@@ -17,19 +17,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User cadastrarUser(User novoUser){
+    public User cadastrarUser(User novoUser) {
         if(novoUser.getUsername().length() < 3 && novoUser.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
         if(novoUser.getPassword().length() < 8) throw new RuntimeException("A senha deve conter mais que 8 caracteres");
         novoUser.setRegisteredAt(LocalDateTime.now());
+
         return this.userRepository.save(novoUser);
     }
 
     public List<User> obterUsers() {
+
         return this.userRepository.findAll();
     }
 
-    public User buscarUserPorId(UUID uuid){
+    public User buscarUserPorId(UUID uuid) {
         Optional<User> user = this.userRepository.findById(uuid);
+        
         return user.orElseThrow(() -> new RuntimeException("teste"));
     }
 

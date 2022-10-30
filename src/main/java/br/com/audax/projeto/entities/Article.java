@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,27 +22,22 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 @Table(name = "articles")
 public class Article {
+    
     @Id
+    @Type(type = "uuid-char")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "uuid", updatable = false, unique = true, nullable = false)
+    @Column(name = "uuid")
     private UUID uuid;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @Column(nullable = false)
     private String title;
+
     private String resume;
     private String text;
     private String slug;
     private LocalDate registeredAt;
-
-    public Article(User user, UUID uuid, String title, String resume, String text, String slug, LocalDate registeredAt){
-        this.user = user;
-        this.uuid = uuid;
-        this.title = title;
-        this.resume = resume;
-        this.text = text;
-        this.slug = slug;
-        this.registeredAt = registeredAt;
-    }
 }

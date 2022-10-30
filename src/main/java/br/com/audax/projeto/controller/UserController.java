@@ -20,6 +20,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -36,23 +37,29 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> cadastrarUser(@RequestBody User user){
+    public ResponseEntity<UserResponseDTO> cadastrarUser(@RequestBody User user) {
         User novoUser = this.modelMapper.map(user, User.class);
         novoUser = this.userService.cadastrarUser(novoUser);
         return new ResponseEntity<>(toUserResponseDTO(novoUser), HttpStatus.CREATED);
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<UserResponseDTO> obterUserPorId(@PathVariable UUID uuid){
+    public ResponseEntity<UserResponseDTO> obterUserPorId(@PathVariable UUID uuid) {
         User user = this.userService.buscarUserPorId(uuid);
         return new ResponseEntity<>(toUserResponseDTO(user), HttpStatus.OK);
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<UserResponseDTO> atualizarProduto(@PathVariable  UUID uuid, @RequestBody UserRequestDTO user) {
+    public ResponseEntity<UserResponseDTO> atualizarUser(@PathVariable  UUID uuid, @RequestBody UserRequestDTO user) {
         User userAtualizado = this.modelMapper.map(user, User.class);
         userAtualizado = this.userService.atualizarUser(uuid, userAtualizado);
 
         return new ResponseEntity<>(toUserResponseDTO(userAtualizado), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<?> deletarUser(@PathVariable UUID uuid) {
+        this.userService.deletarUser(uuid);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
