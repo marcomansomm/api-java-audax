@@ -1,5 +1,6 @@
 package br.com.audax.projeto.controller;
 
+import br.com.audax.projeto.DTO.UserRequestDTO;
 import br.com.audax.projeto.DTO.UserResponseDTO;
 import br.com.audax.projeto.entities.User;
 import br.com.audax.projeto.service.UserService;
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<UserResponseDTO> atualizarProduto(@PathVariable  UUID uuid, @RequestBody UserResponseDTO user) {
+    public ResponseEntity<UserResponseDTO> atualizarProduto(@PathVariable  UUID uuid, @RequestBody UserRequestDTO user) {
         User userAtualizado = this.modelMapper.map(user, User.class);
         userAtualizado = this.userService.atualizarUser(uuid, userAtualizado);
 
