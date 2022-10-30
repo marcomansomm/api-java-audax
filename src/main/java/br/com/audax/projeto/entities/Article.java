@@ -1,6 +1,6 @@
 package br.com.audax.projeto.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -33,11 +33,11 @@ public class Article {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     private String resume;
     private String text;
     private String slug;
-    private LocalDate registeredAt;
+    private LocalDateTime registeredAt;
 }

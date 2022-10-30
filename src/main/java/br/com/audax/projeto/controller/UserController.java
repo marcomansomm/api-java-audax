@@ -24,8 +24,8 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    private UserResponseDTO toUserResponseDTO(User User) {
-        return this.modelMapper.map(User, UserResponseDTO.class);
+    private UserResponseDTO toUserResponseDTO(User user) {
+        return this.modelMapper.map(user, UserResponseDTO.class);
     }
 
     @GetMapping

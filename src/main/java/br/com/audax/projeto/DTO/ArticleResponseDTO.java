@@ -7,9 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UserResponseDTO {
-
+public class ArticleResponseDTO {
+    
     private UUID uuid;
-    private String username;
+    private UserResponseDTO user;
+    private String title;
+    private String resume;
+    private String text;
+    private String slug;
     private LocalDateTime registeredAt;
 }
