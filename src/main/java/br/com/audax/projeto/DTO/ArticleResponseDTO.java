@@ -10,10 +10,10 @@ import lombok.Setter;
 public class ArticleResponseDTO {
     
     private UUID uuid;
-    private UserResponseDTO user;
     private String title;
     private String resume;
     private String text;
     private String slug;
     private LocalDateTime registeredAt;
+    private UserResponseDTO user;
 }

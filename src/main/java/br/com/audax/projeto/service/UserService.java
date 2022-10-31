@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.audax.projeto.entities.User;
+import br.com.audax.projeto.exceptions.NotFoundException;
 import br.com.audax.projeto.repository.UserRepository;
 
 @Service
@@ -33,7 +34,7 @@ public class UserService {
     public User buscarUserPorId(UUID uuid) {
         Optional<User> user = this.userRepository.findById(uuid);
         
-        return user.orElseThrow(() -> new RuntimeException("teste"));
+        return user.orElseThrow(() -> new NotFoundException("User não encontrado"));
     }
 
     public User atualizarUser(UUID uuid, User userAtualizado) {
