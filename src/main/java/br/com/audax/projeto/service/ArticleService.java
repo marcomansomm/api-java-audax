@@ -35,10 +35,10 @@ public class ArticleService {
         return slug.toLowerCase();
     }
 
-    public Article cadastrarArticle(Article novoArticle){
-        //if(novoArticle.getTitle().length() < 30 && novoArticle.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
-        //if(novoArticle.getResume().length() < 50 && novoArticle.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
-        //if(novoArticle.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
+    public Article cadastrarArticle(Article novoArticle) {
+        if(novoArticle.getTitle().length() < 30 || novoArticle.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
+        if(novoArticle.getResume().length() < 50 || novoArticle.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
+        if(novoArticle.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
         
         String slug = this.toSlug(novoArticle.getTitle());
         User user = this.userService.buscarUserPorId(novoArticle.getUser().getUuid());
@@ -64,9 +64,9 @@ public class ArticleService {
     public Article atualizarArticle(UUID uuid, Article articleAtualizado) {
         Article article = this.buscarArticlePorId(uuid);
 
-        //if(novoArticle.getTitle().length() < 30 && novoArticle.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
-        //if(novoArticle.getResume().length() < 50 && novoArticle.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
-        //if(novoArticle.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
+        if(articleAtualizado.getTitle().length() < 30 || articleAtualizado.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
+        if(articleAtualizado.getResume().length() < 50 || articleAtualizado.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
+        if(articleAtualizado.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
 
         article.setTitle(articleAtualizado.getTitle());
         article.setResume(articleAtualizado.getResume());

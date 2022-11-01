@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.audax.projeto.entities.User;
-import br.com.audax.projeto.exceptions.NotFoundException;
 import br.com.audax.projeto.repository.UserRepository;
 
 @Service
@@ -19,7 +18,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User cadastrarUser(User novoUser) {
-        if(novoUser.getUsername().length() < 3 && novoUser.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
+        if(novoUser.getUsername().length() < 3 || novoUser.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
         if(novoUser.getPassword().length() < 8) throw new RuntimeException("A senha deve conter mais que 8 caracteres");
         novoUser.setRegisteredAt(LocalDateTime.now());
 
@@ -34,13 +33,13 @@ public class UserService {
     public User buscarUserPorId(UUID uuid) {
         Optional<User> user = this.userRepository.findById(uuid);
         
-        return user.orElseThrow(() -> new NotFoundException("User não encontrado"));
+        return user.orElseThrow(() -> new RuntimeException("User não encontrado"));
     }
 
     public User atualizarUser(UUID uuid, User userAtualizado) {
         User user = this.buscarUserPorId(uuid);
 
-        if(userAtualizado.getUsername().length() < 3 && userAtualizado.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
+        if(userAtualizado.getUsername().length() < 3 || userAtualizado.getUsername().length() > 150) throw new RuntimeException("O username não pode ter menos que 3 caracteres e não pode ter mais que 150");
         if(userAtualizado.getPassword().length() < 8) throw new RuntimeException("A senha deve conter mais que 8 caracteres");
 
         user.setUsername(userAtualizado.getUsername());

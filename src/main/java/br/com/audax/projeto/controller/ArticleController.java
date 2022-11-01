@@ -37,7 +37,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleResponseDTO> cadastrarArticle(@Validated @RequestBody ArticleResponseDTO article){
+    public ResponseEntity<ArticleResponseDTO> cadastrarArticle(@Validated @RequestBody ArticleResponseDTO article) {
         Article novoArticle = this.modelMapper.map(article, Article.class);
         novoArticle = this.articleService.cadastrarArticle(novoArticle);
         return new ResponseEntity<>(toArticleResponseDTO(novoArticle), HttpStatus.CREATED);
