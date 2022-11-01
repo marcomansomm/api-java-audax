@@ -38,7 +38,7 @@ public class ArticleService {
     public Article cadastrarArticle(Article novoArticle) {
         if(novoArticle.getTitle().length() < 30 || novoArticle.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
         if(novoArticle.getResume().length() < 50 || novoArticle.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
-        if(novoArticle.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
+        if(novoArticle.getText().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
         
         String slug = this.toSlug(novoArticle.getTitle());
         User user = this.userService.buscarUserPorId(novoArticle.getUser().getUuid());
@@ -58,7 +58,7 @@ public class ArticleService {
     public Article buscarArticlePorId(UUID uuid) {
         Optional<Article> article = this.repositoryArticle.findById(uuid);
         
-        return article.orElseThrow(() -> new RuntimeException("teste"));
+        return article.orElseThrow(() -> new RuntimeException("Article não encontrado"));
     }
 
     public Article atualizarArticle(UUID uuid, Article articleAtualizado) {
@@ -66,12 +66,17 @@ public class ArticleService {
 
         if(articleAtualizado.getTitle().length() < 30 || articleAtualizado.getTitle().length() > 70) throw new RuntimeException("O title tem que entre 30 e 150 caracters");
         if(articleAtualizado.getResume().length() < 50 || articleAtualizado.getResume().length() > 100) throw new RuntimeException("O resume tem que entre 50 e 100 caracters");
-        if(articleAtualizado.getResume().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
+        if(articleAtualizado.getText().length() < 200) throw new RuntimeException("O text tem que no minimo 200 carcteres");
+
+        String slug = this.toSlug(articleAtualizado.getTitle());
+        User user = this.userService.buscarUserPorId(articleAtualizado.getUser().getUuid());
 
         article.setTitle(articleAtualizado.getTitle());
         article.setResume(articleAtualizado.getResume());
         article.setText(articleAtualizado.getText());
+        articleAtualizado.setSlug(PREFIX_SLUG + slug);
         article.setRegisteredAt(LocalDateTime.now());
+        articleAtualizado.setUser(user);
 
         return this.repositoryArticle.save(article);
     }
